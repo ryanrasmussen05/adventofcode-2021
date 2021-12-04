@@ -47,9 +47,6 @@ for (let i = 0; i < drawNumbers.length; i++) {
     console.log('solution', sumUnmarkedNumbers(finalBoard) * drawNumber);
     break;
   }
-
-  // find number of winners
-  // if number winners is 1 less than length, find non-winners
 }
 
 function getBoard(startIndex) {
