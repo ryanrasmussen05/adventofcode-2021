@@ -1,7 +1,6 @@
 import { getInput } from '../util/file-reader.js';
 
 const beginChunkChars = ['(', '[', '{', '<'];
-const endChunkChars = [')', ']', '}', '>'];
 function isValidPair(begin, end) {
   return (begin === '(' && end === ')')
       || (begin === '[' && end === ']')
