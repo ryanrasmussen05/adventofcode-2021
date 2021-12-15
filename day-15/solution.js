@@ -1,7 +1,7 @@
 import { getInput } from '../util/file-reader.js';
 const input = await getInput('./day-15/input.txt');
 
-const riskMap = buildRiskMap();
+let riskMap = buildRiskMap();
 const visitedNodes = new Set();
 
 // while (visitedNodes.size < 10000) {
@@ -9,7 +9,15 @@ const visitedNodes = new Set();
 // }
 //console.log(riskMap);
 
-console.log(buildExpandedRiskMap());
+const expandedRiskMap = buildExpandedRiskMap();
+riskMap = expandedRiskMap;
+while (!visitedNodes.has('499,499')) {
+  if (visitedNodes.size % 100 === 0) {
+    console.log(`visited ${visitedNodes.size} nodes`);
+  }
+  visitNode(getNextNodeToVisit());
+}
+console.log(expandedRiskMap);
 
 function buildRiskMap() {
   const map = [];
@@ -29,6 +37,7 @@ function buildRiskMap() {
   return map;
 }
 
+// update this to dequeue priority queue
 function getNextNodeToVisit() {
   let currentLowestNode = { lowestTotalRisk: Number.POSITIVE_INFINITY };
   riskMap.forEach(row => {
@@ -62,7 +71,7 @@ function visitNode(node) {
     if (!hasNodeBeenVisited(topNode) && newLowestRisk < topNode.lowestTotalRisk) topNode.lowestTotalRisk = newLowestRisk;
   }
   // bottom
-  if (node.rowIndex + 1 < 100) {
+  if (node.rowIndex + 1 < 500) {
     const bottomNode = riskMap[node.rowIndex + 1][node.colIndex];
     const newLowestRisk = node.lowestTotalRisk + bottomNode.costToEnter;
     if (!hasNodeBeenVisited(bottomNode) && newLowestRisk < bottomNode.lowestTotalRisk) bottomNode.lowestTotalRisk = newLowestRisk;
@@ -74,7 +83,7 @@ function visitNode(node) {
     if (!hasNodeBeenVisited(leftNode) && newLowestRisk < leftNode.lowestTotalRisk) leftNode.lowestTotalRisk = newLowestRisk;
   }
   // right
-  if (node.colIndex + 1 < 100) {
+  if (node.colIndex + 1 < 500) {
     const rightNode = riskMap[node.rowIndex][node.colIndex + 1];
     const newLowestRisk = node.lowestTotalRisk + rightNode.costToEnter;
     if (!hasNodeBeenVisited(rightNode) && newLowestRisk < rightNode.lowestTotalRisk) rightNode.lowestTotalRisk = newLowestRisk;
